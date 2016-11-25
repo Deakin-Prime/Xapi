@@ -5,6 +5,7 @@ A Ruby library for implementing xAPI.
 For more information about the Tin Can API visit:
 
 http://Xapi.com/
+
 https://github.com/adlnet/xAPI-Spec
 
 ## Installation
