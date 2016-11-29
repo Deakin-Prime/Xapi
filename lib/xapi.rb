@@ -121,9 +121,12 @@ module Xapi
 
   # Parameters can be passed for create_activity_profile are: remote_lrs, profile_id, activity_object, profile_content
   def self.create_activity_profile(opts={})
-    profile_data = Documents::ActivityProfileDocument.new(id: opts[:profile_id], activity: opts[:activity_object],
-                                                          content_type: "application/json", content: opts[:profile_content].to_json
-                                                         )
+    profile_data = Documents::ActivityProfileDocument.new do |pdata|
+      pdata.id = opts[:profile_id]
+      pdata.activity = opts[:activity_object]
+      pdata.content_type = "application/json"
+      pdata.content =opts[:profile_content] .to_json
+    end
     opts[:remote_lrs].save_activity_profile(profile_data)
   end
 
@@ -135,9 +138,12 @@ module Xapi
 
   # Parameters can be passed for update_activity_profile are: remote_lrs, profile_id, activity_object, profile_content
   def self.update_activity_profile(opts={})
-    profile_data = Documents::ActivityProfileDocument.new(id: opts[:profile_id], activity: opts[:activity_object],
-                                                          content_type: "application/json"
-                                                         )
+    profile_data = Documents::ActivityProfileDocument.new do |pdata|
+      pdata.id = opts[:profile_id]
+      pdata.activity = opts[:activity_object]
+      pdata.content_type = "application/json"
+      pdata.content = opts[:profile_content] .to_json
+    end
     existing_activity_profile = get_activity_profile(remote_lrs: opts[:remote_lrs], profile_id: opts[:profile_id], activity_object: opts[:activity_object])
     opts[:remote_lrs].delete_activity_profile(profile_data) if existing_activity_profile.present?
     profile_data.content = opts[:profile_content].to_json
@@ -146,9 +152,12 @@ module Xapi
 
   # Parameters can be passed for create_agent_profile are: remote_lrs, profile_id, agent_object, profile_content
   def self.create_agent_profile(opts={})
-    profile_data = Documents::AgentProfileDocument.new(id: opts[:profile_id], agent: opts[:agent_object],
-                                                       content_type: "application/json", content: opts[:profile_content].to_json
-                                                      )
+    profile_data = Documents::AgentProfileDocument.new do |pdata|
+      pdata.id = opts[:profile_id]
+      pdata.agent = opts[:agent_object]
+      pdata.content_type = "application/json"
+      pdata.content = opts[:profile_content] .to_json
+    end
     opts[:remote_lrs].save_agent_profile(profile_data)
   end
 
@@ -160,9 +169,12 @@ module Xapi
 
   # Parameters can be passed for create_agent_profile are: remote_lrs, profile_id, agent_object, profile_content
   def self.update_agent_profile(opts={})
-    profile_data = Documents::AgentProfileDocument.new(id: opts[:profile_id], agent: opts[:agent_object],
-                                                       content_type: "application/json"
-                                                      )
+    profile_data = Documents::AgentProfileDocument.new do |pdata|
+      pdata.id = opts[:profile_id]
+      pdata.agent = opts[:agent_object]
+      pdata.content_type = "application/json"
+      pdata.content = opts[:profile_content] .to_json
+    end
     existing_agent_profile = get_agent_profile(remote_lrs: opts[:remote_lrs], profile_id: opts[:profile_id], agent_object: opts[:agent_object])
     opts[:remote_lrs].delete_agent_profile(profile_data) if existing_agent_profile.present?
     profile_data.content = opts[:profile_content].to_json
