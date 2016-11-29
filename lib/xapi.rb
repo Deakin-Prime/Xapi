@@ -60,15 +60,15 @@ module Xapi
   	Activity.new(id: opts[:id], definition: activity_definition)
   end
 
-  # Parameters can be passed for create_context are: registration, extensions, team, instructor, statement
-  def self.create_context(opts={})
-  	opts[:language] = 'en-US'
-  	Context.new(opts)
-  end
-
   # Parameters can be passed for create_context_activites are: grouping, category, parent, other
   def self.create_context_activites(opts={})
     ContextActivities.new(opts)
+  end
+
+  # Parameters can be passed for create_context are: registration, extensions, team, instructor, statement, context_activites
+  def self.create_context(opts={})
+  	opts[:language] = 'en-US'
+  	Context.new(opts)
   end
 
   # Parameters can be passed for create_team are: home_page, name
@@ -117,6 +117,56 @@ module Xapi
   # Parameters can be passed for create_remote_lrs are: remote_lrs, statement
   def self.post_statement(opts={})
   	opts[:remote_lrs].save_statement(opts[:statement])
+  end
+
+  # Parameters can be passed for create_activity_profile are: remote_lrs, profile_id, activity_object, profile_content
+  def self.create_activity_profile(opts={})
+    profile_data = Documents::ActivityProfileDocument.new(id: opts[:profile_id], activity: opts[:activity_object],
+                                                          content_type: "application/json", content: opts[:profile_content].to_json
+                                                         )
+    opts[:remote_lrs].save_activity_profile(profile_data)
+  end
+
+  # Parameters can be passed for get_activity_profile are: remote_lrs, profile_id, activity_object
+  def self.get_activity_profile(opts={})
+    response = opts[:remote_lrs].retrieve_activity_profile(opts[:profile_id], opts[:activity_object])
+    response.content
+  end
+
+  # Parameters can be passed for update_activity_profile are: remote_lrs, profile_id, activity_object, profile_content
+  def self.update_activity_profile(opts={})
+    profile_data = Documents::ActivityProfileDocument.new(id: opts[:profile_id], activity: opts[:activity_object],
+                                                          content_type: "application/json"
+                                                         )
+    existing_activity_profile = get_activity_profile(remote_lrs: opts[:remote_lrs], profile_id: opts[:profile_id], activity_object: opts[:activity_object])
+    opts[:remote_lrs].delete_activity_profile(profile_data) if existing_activity_profile.present?
+    profile_data.content = opts[:profile_content].to_json
+    opts[:remote_lrs].save_activity_profile(profile_data)
+  end
+
+  # Parameters can be passed for create_agent_profile are: remote_lrs, profile_id, agent_object, profile_content
+  def self.create_agent_profile(opts={})
+    profile_data = Documents::AgentProfileDocument.new(id: opts[:profile_id], agent: opts[:agent_object],
+                                                       content_type: "application/json", content: opts[:profile_content].to_json
+                                                      )
+    opts[:remote_lrs].save_agent_profile(profile_data)
+  end
+
+  # Parameters can be passed for get_agent_profile are: remote_lrs, profile_id, agent_object
+  def self.get_agent_profile(opts={})
+    response = opts[:remote_lrs].retrieve_agent_profile(opts[:profile_id], opts[:agent_object])
+    response.content
+  end
+
+  # Parameters can be passed for create_agent_profile are: remote_lrs, profile_id, agent_object, profile_content
+  def self.update_agent_profile(opts={})
+    profile_data = Documents::AgentProfileDocument.new(id: opts[:profile_id], agent: opts[:agent_object],
+                                                       content_type: "application/json"
+                                                      )
+    existing_agent_profile = get_agent_profile(remote_lrs: opts[:remote_lrs], profile_id: opts[:profile_id], agent_object: opts[:agent_object])
+    opts[:remote_lrs].delete_agent_profile(profile_data) if existing_agent_profile.present?
+    profile_data.content = opts[:profile_content].to_json
+    opts[:remote_lrs].save_agent_profile(profile_data)
   end
 
 end
