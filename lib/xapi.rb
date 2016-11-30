@@ -119,13 +119,13 @@ module Xapi
   	opts[:remote_lrs].save_statement(opts[:statement])
   end
 
-  # Parameters can be passed for create_statement_query are: registration_id, verb_id, activity_id, agent_email, team_name, search_related_agents, search_related_activities
+  # Parameters can be passed for create_statement_query are: registration_id, verb_id, activity_id, agent_email, agent_name, team_home_page, team_name, search_related_agents, search_related_activities
   def self.create_statement_query(opts={})
     StatementsQuery.new do |s|
       s.registration = opts[:registration_id] if opts[:registration_id].present?
       s.activity_id = opts[:activity_id] if opts[:activity_id].present?
       s.related_activities = opts[:search_related_activities] if opts[:search_related_activities].present?
-      agent_object = opts[:agent_email].present? ? create_agent(agent_type: "Agent", email: opts[:agent_email]) : create_team(name: opts[:team_name])
+      agent_object = opts[:agent_email].present? ? create_agent(agent_type: "Agent", email: opts[:agent_email], name: opts[:agent_name]) : create_team(home_page: opts[:team_home_page], name: opts[:team_name])
       s.agent = agent_object if agent_object.present?
       s.related_agents = opts[:team_name].present? ? true : opts[:search_related_agents]
       s.verb_id = opts[:verb_id] if opts[:verb_id].present?
