@@ -119,6 +119,32 @@ module Xapi
   	opts[:remote_lrs].save_statement(opts[:statement])
   end
 
+  # Parameters can be passed for create_statement_query are: registration_id, verb_id, activity_id, agent_email, team_name, search_related_agents, search_related_activities
+  def self.create_statement_query(opts={})
+    StatementsQuery.new do |s|
+      s.registration = opts[:registration_id] if opts[:registration_id].present?
+      s.activity_id = opts[:activity_id] if opts[:activity_id].present?
+      s.related_activities = opts[:search_related_activities] if opts[:search_related_activities].present?
+      agent_object = opts[:agent_email].present? ? create_agent(agent_type: "Agent", email: opts[:agent_email]) : create_team(name: opts[:team_name])
+      s.agent = agent_object if agent_object.present?
+      s.related_agents = opts[:team_name].present? ? true : opts[:search_related_agents]
+      s.verb_id = opts[:verb_id] if opts[:verb_id].present?
+    end
+  end
+
+  # Parameters can be passed for get_statement_by_id are: remote_lrs, statement_id
+  def self.get_statements_by_id(opts={})
+    response = opts[:remote_lrs].retrieve_statement(opts[:statement_id])
+    response.content
+  end
+
+  # Parameters can be passed for get_statements_by_query are: remote_lrs, statement_query
+  def self.get_statements_by_query(opts={})
+    response = opts[:remote_lrs].query_statements(opts[:statement_query])
+    statements = response.content.statements if response.success
+    statements.present? ? {statements_count: statements.count, statements: statements} : {statements_count: 0, statements: nil}
+  end
+
   # Parameters can be passed for create_activity_profile are: remote_lrs, profile_id, activity_object, profile_content
   def self.create_activity_profile(opts={})
     profile_data = Documents::ActivityProfileDocument.new do |pdata|
