@@ -179,6 +179,60 @@ result_statements_response[:statements_count]
 JSON.parse(result_statements_response[:statements].to_json) if result_statements_response[:statements_count] > 0
 ```
 
+## Creating or updating the Profiles in LRS
+
+Create/Update Activity Profile
+
+```ruby
+# Parameters can be passed for create_activity_profile are: remote_lrs, profile_id, activity_object, profile_content
+
+activity_object = Xapi.create_activity(id: 'http://some.leranactivity.com/topics/1', name: 'title', type: 'http://activitystrea.ms/schema/1.0/task' )
+
+profile_content = { "name"=> "title", "description" => "description", "relevance" => "relevance", "type" => "http://some.leranactivity.com/evidences/document"
+                           }
+Xapi.create_activity_profile(remote_lrs: remote_lrs, profile_id: 'topic profile', activity_object: activity_object, profile_content: profile_activity_content)
+
+Xapi.update_activity_profile(remote_lrs: remote_lrs, profile_id: 'topic profile', activity_object: activity_object, profile_content: profile_activity_content)
+
+```
+
+Create/Update Agent Profile
+
+```ruby
+# Parameters can be passed for create_agent_profile are: remote_lrs, profile_id, agent_object, profile_content
+
+agent_details = Xapi.create_agent(agent_type: "Agent", email: 'email', name: 'name')
+
+profile_content = { "objectType" => "Agent", "name" =>  "name", "avatar" => "avatar image url", "age" => "age", "roles" => ["role1", "rol2"], "teams" => ["team name"] }
+
+Xapi.create_agent_profile(remote_lrs: remote_lrs, profile_id: "user profile", agent_object: agent_details, profile_content: profile_content)
+
+Xapi.update _agent_profile(remote_lrs: remote_lrs, profile_id: "user profile", agent_object: agent_details, profile_content: profile_content)
+
+```
+
+## Get the Profiles from LRS
+
+Get Activity Profile
+
+```ruby
+# Parameters can be passed for get_activity_profile are: remote_lrs, profile_id, activity_object
+
+activity_object = Xapi.create_activity(id: 'http://some.leranactivity.com/topics/1', name: 'title', type: 'http://activitystrea.ms/schema/1.0/task' )
+
+Xapi.get_activity_profile(remote_lrs: remote_lrs, profile_id: "topic profile", activity_object: activity_object)
+```
+
+Get Agent Profile
+
+```ruby
+# Parameters can be passed for get_agent_profile are: remote_lrs, profile_id, agent_object
+
+agent_details = Xapi.create_agent(agent_type: "Agent", email: 'email', name: 'name')
+
+Xapi.get_agent_profile(remote_lrs: remote_lrs, profile_id: "topic profile", agent_object: agent_details)
+
+```
 
 For more API calls check out the Xapi Module Class methods
 
