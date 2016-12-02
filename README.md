@@ -7,6 +7,7 @@ For more information about the Tin Can API visit:
 http://Xapi.com/
 
 For more information about the xAPI Statements Specficiations and Components visit:
+
 https://github.com/adlnet/xAPI-Spec
 
 ## Installation
@@ -44,7 +45,9 @@ if response.success
 end
 ```
 
-#Creating the Properties of Statement
+#Creating the Properties of a Statement
+
+For more information about the Properties of a xAPI Statement visit:
 
 https://github.com/adlnet/xAPI-Spec/blob/master/xAPI-Data.md
 
@@ -142,6 +145,40 @@ if response.success
 end
 
 ```
+
+## Querying Statements required from LRS
+
+Get Statement based on statement ID
+
+```ruby
+# Parameters can be passed for get_statements_by_query are: remote_lrs, statement_query
+
+Xapi.get_statements_by_id(remote_lrs: remote_lrs, statement_id: '2a8785a0-8ee8-41ad-9172-e194a82e30a4')
+```
+
+Get Statements based on Queries
+
+```ruby
+# Parameters can be passed for create_statement_query are: registration_id, verb_id, activity_id
+# Eithe agent details: agent_email, agent_name
+# or Team details: team_home_page, team_name
+# Searching related statements by passing boolean values to these: search_related_agents, search_related_activities
+
+#Based on Team
+statement_query = Xapi.create_statement_query(verb_id: 'http://id.tincanapi.com/verb rated', activity_id: 'http://some.learnactivity.com/conversation', team_home_page: 'http://some.learnactivity.com', team_name: 'team_name')
+
+#Based on Agent
+statement_query = Xapi.create_statement_query(verb_id: 'http://id.tincanapi.com/verb rated', activity_id: 'http://some.learnactivity.com/conversation', agent_email: 'email', agent_name: 'name')
+
+result_statements_response = Xapi.get_statements_by_query(remote_lrs: remote_lrs, statement_query: statement_query)
+
+#Knowing result statements count
+result_statements_response[:statements_count]
+
+#Knowing the result statements
+JSON.parse(result_statements_response[:statements].to_json) if result_statements_response[:statements_count] > 0
+```
+
 
 For more API calls check out the Xapi Module Class methods
 
