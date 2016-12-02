@@ -1,4 +1,4 @@
-Copyright (c) 2016 Kodanda Pani K
+Copyright (c) 2016 Deakin Prime
 
 MIT License
 
