@@ -135,13 +135,13 @@ module Xapi
   # Parameters can be passed for get_statement_by_id are: remote_lrs, statement_id
   def self.get_statements_by_id(opts={})
     response = opts[:remote_lrs].retrieve_statement(opts[:statement_id])
-    response.content
+    response.status == 200 ? response.content : nil
   end
 
   # Parameters can be passed for get_statements_by_query are: remote_lrs, statement_query
   def self.get_statements_by_query(opts={})
     response = opts[:remote_lrs].query_statements(opts[:statement_query])
-    statements = response.content.statements if response.success
+    statements = response.content.statements if response.status == 200 && response.content.present?
     statements.present? ? {statements_count: statements.count, statements: statements} : {statements_count: 0, statements: nil}
   end
 
@@ -159,7 +159,7 @@ module Xapi
   # Parameters can be passed for get_activity_profile are: remote_lrs, profile_id, activity_object
   def self.get_activity_profile(opts={})
     response = opts[:remote_lrs].retrieve_activity_profile(opts[:profile_id], opts[:activity_object])
-    response.content
+    response.status == 200 ? response.content : nil
   end
 
   # Parameters can be passed for update_activity_profile are: remote_lrs, profile_id, activity_object, profile_content
@@ -190,7 +190,7 @@ module Xapi
   # Parameters can be passed for get_agent_profile are: remote_lrs, profile_id, agent_object
   def self.get_agent_profile(opts={})
     response = opts[:remote_lrs].retrieve_agent_profile(opts[:profile_id], opts[:agent_object])
-    response.content
+    response.status == 200 ? response.content : nil
   end
 
   # Parameters can be passed for create_agent_profile are: remote_lrs, profile_id, agent_object, profile_content
