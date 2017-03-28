@@ -95,19 +95,19 @@ object = Xapi.create_activity(id: "http://some.learnactivity.com/conversation",
 Create a Context Activities for Given Context of a Statement
 
 ```ruby
-# Parameters can be passed for create_context_activites are: grouping, category, parent, other which are Array of Objects/Activitites realted to Context of a Statement
+# Parameters can be passed for create_context_activities are: grouping, category, parent, other which are Array of Objects/Activitites realted to Context of a Statement
 
 grouping_array = []
 grouping_array << Xapi.create_activity( id: "http://some.learnactivity.com/topics/1", 
                                         name: 'topic title', type: "http://activitystrea.ms/schema/1.0/task"
                                       )
-context_activities = Xapi.create_context_activites(grouping: grouping_array)
+context_activities = Xapi.create_context_activities(grouping: grouping_array)
 ```
 
 Create a Context for a Statement
 
 ```ruby
-# Parameters can be passed for create_context are: registration, extensions, team, instructor, statement, context_activites
+# Parameters can be passed for create_context are: registration, extensions, team, instructor, statement, context_activities
 
 context = Xapi.create_context(registration: 'registration_id', 
                               extensions: { "http://some.learnactivity.com/extension/tags" => ["domain1", "domain2"], 

@@ -60,12 +60,12 @@ module Xapi
   	Activity.new(id: opts[:id], definition: activity_definition)
   end
 
-  # Parameters can be passed for create_context_activites are: grouping, category, parent, other
-  def self.create_context_activites(opts={})
+  # Parameters can be passed for create_context_activities are: grouping, category, parent, other
+  def self.create_context_activities(opts={})
     ContextActivities.new(opts)
   end
 
-  # Parameters can be passed for create_context are: registration, extensions, team, instructor, statement, context_activites
+  # Parameters can be passed for create_context are: registration, extensions, team, instructor, statement, context_activities
   def self.create_context(opts={})
   	opts[:language] = 'en-US'
   	Context.new(opts)
