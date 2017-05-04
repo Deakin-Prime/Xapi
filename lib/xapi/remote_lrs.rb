@@ -121,6 +121,26 @@ module Xapi
       end
     end
 
+    def query_analytics(analytics_query)
+      # TODO: Complete this
+      query = analytics_query
+      query = AnalyticsQuery.new unless query
+
+      response = connection.get do |req|
+        req.url("#{path}analytics")
+        req.params.merge!(query.parameter_map)
+      end
+      LrsResponse.new do |lrs|
+        lrs.status = response.status
+        if response.status == 200
+          lrs.success = true
+          lrs.content = JSON.parse(response.body)
+        else
+          lrs.success = false
+        end
+      end
+    end
+
     def more_statements(more_url)
       # TODO: Complete this
       # more_url is relative to the endpoint's server root

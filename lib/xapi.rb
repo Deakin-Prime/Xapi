@@ -23,6 +23,7 @@ require 'xapi/statement'
 require 'xapi/sub_statement'
 require 'xapi/statement_ref'
 require 'xapi/statements_query'
+require 'xapi/analytics_query'
 require 'xapi/statements_query_v095'
 require 'xapi/lrs_response'
 require "xapi/remote_lrs"
@@ -143,6 +144,23 @@ module Xapi
     response = opts[:remote_lrs].query_statements(opts[:statement_query])
     statements = response.content.statements if response.status == 200 && response.content.present?
     statements.present? ? {statements_count: statements.count, statements: statements} : {statements_count: 0, statements: nil}
+  end
+
+  # Parameters can be passed for create_analytics_query are: registration_id, verb_id, activity_id, activity_type, team_name
+  def self.create_analytics_query(opts={})
+    AnalyticsQuery.new do |s|
+      s.registration = opts[:registration_id] if opts[:registration_id].present?
+      s.activity_id = opts[:activity_id] if opts[:activity_id].present?
+      s.activity_type = opts[:activity_type] if opts[:activity_type].present?
+      s.verb_id = opts[:verb_id] if opts[:verb_id].present?
+      s.team_name = opts[:team_name] if opts[:team_name].present?
+    end
+  end
+
+  # Parameters can be passed for get_analytics_by_query are: remote_lrs, analytics_query
+  def self.get_analytics_by_query(opts={})
+    response = opts[:remote_lrs].query_analytics(opts[:analytics_query])
+    response.content
   end
 
   # Parameters can be passed for create_activity_profile are: remote_lrs, profile_id, activity_object, profile_content
