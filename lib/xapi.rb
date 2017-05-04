@@ -146,7 +146,7 @@ module Xapi
     statements.present? ? {statements_count: statements.count, statements: statements} : {statements_count: 0, statements: nil}
   end
 
-  # Parameters can be passed for create_analytics_query are: registration_id, verb_id, activity_id, activity_type, team_name
+  # Parameters can be passed for create_analytics_query are: registration_id, verb_id, activity_id, activity_type, team_name, agent_email
   def self.create_analytics_query(opts={})
     AnalyticsQuery.new do |s|
       s.registration = opts[:registration_id] if opts[:registration_id].present?
@@ -154,6 +154,7 @@ module Xapi
       s.activity_type = opts[:activity_type] if opts[:activity_type].present?
       s.verb_id = opts[:verb_id] if opts[:verb_id].present?
       s.team_name = opts[:team_name] if opts[:team_name].present?
+      s.agent_email = opts[:agent_email] if opts[:agent_email].present?
     end
   end
 
