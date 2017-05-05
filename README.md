@@ -223,6 +223,16 @@ activity_object = Xapi.create_activity(id: 'http://some.leranactivity.com/topics
 Xapi.get_activity_profile(remote_lrs: remote_lrs, profile_id: "topic profile", activity_object: activity_object)
 ```
 
+Get Multiple Activity Profiles for given Activity
+
+```ruby
+# Parameters can be passed for get_activity_profile are: remote_lrs, profile_id, activity_object
+
+activity_object = Xapi.create_activity(id: 'http://some.leranactivity.com/topics/1', name: 'title', type: 'http://activitystrea.ms/schema/1.0/task' )
+
+Xapi.get_activity_profile(remote_lrs: remote_lrs, profile_id: ["profile1", "profile2"], activity_object: activity_object)
+```
+
 Get Agent Profile
 
 ```ruby
@@ -230,7 +240,18 @@ Get Agent Profile
 
 agent_details = Xapi.create_agent(agent_type: "Agent", email: 'email', name: 'name')
 
-Xapi.get_agent_profile(remote_lrs: remote_lrs, profile_id: "topic profile", agent_object: agent_details)
+Xapi.get_agent_profile(remote_lrs: remote_lrs, profile_id: "agent profile", agent_object: agent_details)
+
+```
+
+Get Multiple Agent Profiles for given agent
+
+```ruby
+# Parameters can be passed for get_agent_profile are: remote_lrs, profile_id, agent_object
+
+agent_details = Xapi.create_agent(agent_type: "Agent", email: 'email', name: 'name')
+
+Xapi.get_agent_profile(remote_lrs: remote_lrs, profile_id: ["profile1", "profile2"], agent_object: agent_details)
 
 ```
 
