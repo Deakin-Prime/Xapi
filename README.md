@@ -234,6 +234,41 @@ Xapi.get_agent_profile(remote_lrs: remote_lrs, profile_id: "topic profile", agen
 
 ```
 
+## Analytics related to Team and its Team members related to Assessment
+
+Get Team and its members Average scores
+
+```ruby
+# Parameters can be passed for it: verb_id, activity_id, activity_type, team_name
+
+analytics_query = Xapi.create_analytics_query(verb_id: "http://id.tincanapi.com/verb/rated", activity_type: "http://activitystrea.ms/schema/1.0/task", team_name: "Digital Learning" )
+
+analytics_response = Xapi.get_analytics_by_query(remote_lrs: remote_lrs, analytics_query: analytics_query)
+
+```
+
+Get Team and its members Average scores, Activity frequency For given activity
+
+```ruby
+# Parameters can be passed for it: verb_id, activity_id, activity_type, team_name
+
+analytics_query = Xapi.create_analytics_query(verb_id: "http://id.tincanapi.com/verb/rated", activity_type: "http://activitystrea.ms/schema/1.0/task", team_name: "Digital Learning", activity_id: "http://some.leranactivity.com/activities/1" )
+
+analytics_response = Xapi.get_analytics_by_query(remote_lrs: remote_lrs, analytics_query: analytics_query)
+
+```
+
+Get Agent or Team member related all activities along with agent and its team average scores
+
+```ruby
+# Parameters can be passed for it: verb_id, agent_email, activity_type, team_name
+
+analytics_query = Xapi.create_analytics_query(verb_id: "http://id.tincanapi.com/verb/rated", activity_type: "http://activitystrea.ms/schema/1.0/task", team_name: "Digital Learning", agent_email: "123@test.com" )
+
+analytics_response = Xapi.get_analytics_by_query(remote_lrs: remote_lrs, analytics_query: analytics_query)
+
+```
+
 For more API calls check out the Xapi Module Class methods
 
 For more API calls check out the Xapi::RemoteLRS class
