@@ -121,13 +121,13 @@ module Xapi
       end
     end
 
-    def query_analytics(analytics_query)
+    def query_team_analytics(team_analytics_query)
       # TODO: Complete this
-      query = analytics_query
-      query = AnalyticsQuery.new unless query
+      query = team_analytics_query
+      query = TeamAnalyticsQuery.new unless query
 
       response = connection.get do |req|
-        req.url("#{path}analytics")
+        req.url("#{path}team_analytics")
         req.params.merge!(query.parameter_map)
       end
       LrsResponse.new do |lrs|

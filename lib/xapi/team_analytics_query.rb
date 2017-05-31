@@ -1,6 +1,6 @@
 # encoding: utf-8
 module Xapi
-  class AnalyticsQuery
+  class TeamAnalyticsQuery
 
     attr_accessor :version, :verb_id
     attr_accessor :activity_id, :registration, :activity_type, :team_name, :agent_email
@@ -16,7 +16,7 @@ module Xapi
       if value.is_a?(Verb)
         @verb_id = value.id
       else
-        @verb_id = Addressable::URI.parse(value)
+        @verb_id =value
       end
     end
 

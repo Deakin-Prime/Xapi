@@ -17,13 +17,13 @@ module Xapi
       if value.is_a?(Verb)
         @verb_id = value.id
       else
-        @verb_id = Addressable::URI.parse(value)
+        @verb_id = value
       end
     end
 
     def parameter_map
       params = {}
-      params['agent'] = agent.object_type.eql?("Group") ? {"account": {"homePage": agent.account.home_page, "name": agent.account.name}}.to_json : {"mbox":agent.mbox}.to_json if agent
+      params['agent'] = agent.object_type.eql?("Group") ? {"account": {"homePage": agent.account.homePage, "name": agent.account.name}}.to_json : {"mbox":agent.mbox}.to_json if agent
       params['verb'] = verb_id.to_s if verb_id
       params['activity'] = activity_id.to_s if activity_id
       params['registration'] = registration if registration

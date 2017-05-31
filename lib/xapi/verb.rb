@@ -21,7 +21,7 @@ module Xapi
     end
 
     def id=(value)
-      @id = Addressable::URI.parse(value) if value
+      @id = value if value
     end
 
     def serialize(version)

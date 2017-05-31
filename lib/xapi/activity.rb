@@ -11,7 +11,7 @@ module Xapi
       json = options.fetch(:json, nil)
       if json
         attributes = JSON.parse(json)
-        self.id =  Addressable::URI.parse(attributes['id']) if attributes['id']
+        self.id =  attributes['id'] if attributes['id']
         self.definition = ActivityDefinition.new(json: attributes['definition'].to_json) if attributes['definition']
       else
         self.id = options.fetch(:id, nil)
@@ -23,11 +23,7 @@ module Xapi
     end
 
     def id=(value)
-      if value.is_a?(String)
-        @id = Addressable::URI.parse(value)
-      else
-        @id = value
-      end
+      @id = value
     end
 
     def serialize(version)

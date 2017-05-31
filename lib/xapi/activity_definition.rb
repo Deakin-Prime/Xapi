@@ -81,19 +81,11 @@ module Xapi
     end
 
     def type=(value)
-      if value.is_a?(String)
-        @type = Addressable::URI.parse(value)
-      else
-        @type = value
-      end
+      @type = value
     end
 
     def more_info=(value)
-      if value.is_a?(String)
-        @more_info = Addressable::URI.parse(value)
-      else
-        @more_info = value
-      end
+      @more_info = value
     end
 
     def serialize(version)

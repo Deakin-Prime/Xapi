@@ -6,7 +6,7 @@ describe Xapi::AgentAccount do
 
   it 'should serialize and deserialize' do
     account = Xapi::AgentAccount.new
-    account.home_page = 'http://example.com'
+    account.homePage = 'http://example.com'
     account.name = 'joeuser'
     assert_serialize_and_deserialize(account)
   end
