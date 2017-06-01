@@ -91,7 +91,7 @@ module Xapi
   	elsif opts[:score_details].present?
   		score = Score.new(raw: opts[:score_details][:raw], min: opts[:score_details][:min], max: opts[:score_details][:max])
   	end
-  	duration = opts[:duration].present? ?  Duration.new(opts[:duration]) : nil
+  	duration = opts[:duration].present? ?  opts[:duration] : nil
   	result = Result.new(duration: duration, score: score)
     result.response = opts[:response] if opts[:response].present?
     result.success = opts[:success] if opts[:success].present?

@@ -13,7 +13,7 @@ module Xapi
         self.score = Xapi::Score.new(json: attributes['score'].to_json) if attributes['score']
         self.success = attributes['success'] unless attributes['success'].nil?
         self.completion = attributes['completion'] unless attributes['completion'].nil?
-        self.duration = Duration.new(attributes['duration']) if attributes['duration']
+        self.duration = attributes['duration'] if attributes['duration']
         self.response = attributes['response'] if attributes['response']
         self.extensions = attributes['extensions'] if attributes['extensions']
       else
